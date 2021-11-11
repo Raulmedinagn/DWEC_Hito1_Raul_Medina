@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Realiza un ejemplo con declaración de diferentes variables 
+
+        var a = 2; // Number (int)
+        var b = 2.5; // Number (float)
+        var c = "Hola"; // String
+        var d = true; // Boolean
+        var array = ["Soy String", 5, true]; // Array literal       
+
+        console.log("La variable a: "+ a +", es de tipo: "+typeof(a));
+        console.log("La variable b: "+ b +", es de tipo: "+typeof(b));
+        console.log("La variable c: "+ c +", es de tipo: "+typeof(c));
+        console.log("La variable d: "+ d +", es de tipo: "+typeof(d));
+        console.log("La variable array: "+ array +", es de tipo: "+typeof(array));
+    </script>
+    <script>
+        //Explica la diferencia entre let, var y const con un ejemplo.
+
+        //No se puede redefinir la misma variable en el mismo bloque
+        /* 
+        let a = "hola";
+        let a = "adios";
+        console.log(a);
+        */
+        
+        
+        let a1 = "hola";
+        if(true){
+            let a1 = "adios";
+            console.log("Dentro del if: " + a1);
+        }
+        console.log("Fuera del if: " + a1);
+        
+
+        //si se puede 
+        var b = "hola";
+        var b = "adios";
+        console.log(b);
+        
+        var b = "hola";
+        if(true){
+            var b = "adios";
+            console.log("Dentro del if: " + b);
+        }
+        console.log("Fuera del if: " + b);
+        
+
+        const aa = "hola";
+        console.log(aa);
+        //No se puede cambiar el valor de una constante
+        /*
+        aa = "adios";
+        console.log(aa);
+        */
+        
+        //No se puede redefinir la misma constante en el mismo bloque
+        /*
+        const abc = "hola";
+        const abc = "adios";
+        */
+        
+        
+        
+
+    </script>
+</body>
+
+</html>

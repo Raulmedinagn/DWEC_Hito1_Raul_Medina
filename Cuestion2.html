@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body onload="todo()">
+    <style>
+        form {
+            border: 1px solid black;
+            padding: 1%;
+            display: inline-block;
+
+        }
+
+        img {
+            width: 300px;
+            height: 200px;
+        }
+
+        table {
+            margin-top: 5px;
+        }
+
+        button {
+            margin: 3px;
+        }
+    </style>
+
+    <form action="">
+        <label for="nombre">Nombre: </label>
+        <input type="text" name="nombre" id="nombre" required />
+        <br><br>
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" required />
+        <br><br>
+        <label>Sexo: </label>
+        <input type="radio" name="radiob" id="r1" value="Masculino" required />
+        <label for="r1">Masculino</label>
+        <input type="radio" name="radiob" id="r2" value="Femenino" required />
+        <label for="r2">Femenino</label>
+        <input type="radio" name="radiob" id="r3" value="Otro" required />
+        <label for="r3">Otro</label>
+        <br><br>
+        <button onclick="enviar(event)">Enviar</button>
+    </form>
+    <br>
+    <div id="resultadoFormulario"></div>
+    <br>
+    <div id="fotos">
+        <img src="img/img1.jpg" alt="Imagen1" onmouseover="ocultar(event)">
+        <img src="img/img2.jpg" alt="Imagen2" onmouseover="ocultar(event)">
+        <img src="img/img3.jpg" alt="Imagen3" onmouseover="ocultar(event)">
+        <br>
+        <button onclick="mostrar()">Mostrar imagenes de nuevo</button>
+    </div>
+    <div>
+        <p>Generar Tabla de Multiplicar</p>
+        <form action="">
+            <label for="numero">Numero: </label>
+            <input type="number" min="-1000" max="1000" name="numero" id="numero" placeholder="Numero" required>
+            <input type="submit" value="Enviar" onclick="tabla(event)">
+        </form>
+    </div>
+    <div id="tabla" onmouseover=""></div>
+
+
+    <script>
+
+        function enviar(event) {
+            event.preventDefault();
+            let div = document.getElementById("resultadoFormulario");
+            //eliminamos todos los hijos del div en el caso que los tuviera
+            //por si se reenvia el formulario borrar el anterior
+            while (div.firstChild) {
+                div.removeChild(div.lastChild);
+            }
+            //obtenemos los datos del formulario
+            let nombre = document.getElementById("nombre").value;
+            let email = document.getElementsByTagName("input");
+            let sexo = document.querySelector('input[name="radiob"]:checked');
+            //Validacion del formulario
+            if (nombre.length != 0 && email[1].value.length != 0 && sexo != null) {
+                //Creamos un text node con la informacion, lo añadimos al p, y el p lo añadimos al div
+                let nombreTxt = document.createTextNode("Nombre: " + nombre);
+                var p = document.createElement("p");
+                p.appendChild(nombreTxt);
+                div.appendChild(p);
+
+                let emailTxt = document.createTextNode("Email: " + email[1].value);
+                var p = document.createElement("p");
+                p.appendChild(emailTxt);
+                div.appendChild(p);
+
+                sexo = sexo.value;
+                let sexoTxt = document.createTextNode("Sexo: " + sexo);
+                var p = document.createElement("p");
+                p.appendChild(sexoTxt);
+                div.appendChild(p);
+            } else {
+                let errorTxt = document.createTextNode("No puedes Enviar un Formulario vacio");
+                var p = document.createElement("p");
+                p.appendChild(errorTxt);
+                div.appendChild(p);
+            }
+        }
+
+        //funcion para ocultar una imagen
+        function ocultar(event) {
+            let target = event.srcElement;
+            target.style.visibility = "hidden";
+        }
+
+        //funcion para mostrar todas las imagenes
+        function mostrar() {
+            let imagenes = document.getElementsByTagName("img");
+            //Conversion de collection a array
+            let imagenesArray = Array.from(imagenes);
+
+            imagenesArray.forEach(element => {
+                if (element.style.visibility == "hidden") {
+                    element.style.visibility = "visible";
+                }
+            });
+
+        }
+
+        //funcion para generar una tabla de multiplicar
+        function tabla(event) {
+            event.preventDefault();
+
+            let numero = document.getElementById("numero").value;
+            let divtabla = document.getElementById("tabla");
+            //validacion de formulario
+            if (numero.length != 0) {
+                //eliminamos todos los hijos del div en el caso que los tuviera
+                //por si se reenvia el formulario borrar el anterior
+                while (divtabla.firstChild) {
+                    divtabla.removeChild(divtabla.lastChild);
+                }
+                // Creo los elementos <table> y <tbody>
+                var tabla = document.createElement("table");
+                var tblBody = document.createElement("tbody");
+
+
+                for (var i = 0; i <= 10; i++) {
+                    // Creo las hileras y las celdas de la tabla
+                    var hilera = document.createElement("tr");
+
+                    var celda = document.createElement("td");
+
+                    var textoCelda = document.createTextNode(i + " x " + numero + " = " + (i * numero));
+
+                    celda.appendChild(textoCelda);
+                    hilera.appendChild(celda);
+
+                    // agrega la hilera al final de la tabla
+                    tblBody.appendChild(hilera);
+                }
+                // agregamos el tbody a la tabla
+                tabla.appendChild(tblBody);
+                // metemos la tabla dentro de divtabla
+                divtabla.appendChild(tabla);
+                // modifica el atributo "border" de la tabla
+                tabla.setAttribute("border", "1");
+            } else {
+                while (divtabla.firstChild) {
+                    divtabla.removeChild(divtabla.lastChild);
+                }
+
+                let errorTxt = document.createTextNode("No puedes Enviar un Formulario vacio");
+                var p = document.createElement("p");
+                p.appendChild(errorTxt);
+                divtabla.appendChild(p);
+            }
+        }
+
+        //funcion para identificar el navegador
+        function identificarNavegador() {
+            let navegador = navigator.userAgent.toLowerCase();
+
+            let body = document.getElementsByTagName("body");
+            let p = document.createElement("p");
+            let texto = "";
+            if (navegador.indexOf('chrome') > -1) {
+                texto = document.createTextNode('El navegador es Chrome');
+            }
+            if (navegador.indexOf('firefox') > -1) {
+                texto = document.createTextNode('El navegador es Firefox');
+            }
+            if (navegador.indexOf('opera') > -1) {
+                texto = document.createTextNode('El navegador es Opera');
+            }
+            if (navegador.indexOf('MSIE') > -1) {
+                texto = document.createTextNode('El navegador es Internet Explorer');
+            }
+            p.appendChild(texto);
+            body[0].appendChild(p);
+        }
+        //funcion para ver el tamaño de la ventana
+        function tamanioVentana() {
+            let ancho = window.innerWidth;
+            let alto = window.innerHeight;
+
+            let boton = document.createElement('button');
+            boton.innerText = 'Tamaño de ventana';
+            boton.setAttribute('onclick', 'alertaTamanios("ventana",' + alto + ',' + ancho + ');');
+            document.body.appendChild(boton);
+        }
+        //funcion para ver el tamaño de la pantalla
+        function tamanioPantalla() {
+            let ancho = screen.width;
+            let alto = screen.height;
+            let boton = document.createElement('button');
+            boton.innerText = 'Tamaño de pantalla';
+            boton.setAttribute('onclick', 'alertaTamanios("pantalla",' + alto + ',' + ancho + ');');
+
+            document.body.appendChild(boton);
+
+        }
+        //funcion para mostrar alertas de tamaños
+        function alertaTamanios(tipo,alto, ancho) {
+            window.alert("El alto de la " + tipo +" es: " + alto + " pixeles y el ancho de la " + tipo +" es: " + ancho + " pixeles.");
+        }
+        //funcion para agrupar funciones para cargarlas juntas en el onload
+        function todo() {
+            identificarNavegador();
+            tamanioVentana();
+            tamanioPantalla();
+        }
+
+    </script>
+</body>
+
+</html>

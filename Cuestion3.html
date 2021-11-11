@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="consultarCookies()">Consultar cookies</button>
+    <button onclick="consultarLocalStorage()">Consultar localStorage</button>
+    <button onclick="consultarSessionlStorage()">Consultar sessionStorage</button>
+    <script>
+        //creacion de una cookie
+        document.cookie = "value = cookie";
+
+        //Creacion de una localStorage
+        localStorage.setItem("value", "localStorage");
+
+        //Creacion de una sessionStorage
+        sessionStorage.setItem("value", "sessionStorage");
+
+
+        function consultarCookies() {
+            let cookies = document.cookie;//obtenemos todas las cookies
+
+            let listaCookies = cookies.split(";");//array list de todas las cookies
+
+            let valores;
+            let parrafo;
+            let txtParrafo;
+            h2 = document.createElement("h2");
+            txth2 = document.createTextNode("Cookies");
+            h2.appendChild(txth2);
+            document.body.appendChild(h2);
+            listaCookies.forEach(element => {
+                valores = element.split("=");
+                console.log(valores[0] + " " + valores[1]);
+                parrafo = document.createElement("p");
+                txtParrafo = document.createTextNode("Name: " + valores[0] + ", Value: " + valores[1]);
+                parrafo.appendChild(txtParrafo);
+                document.body.appendChild(parrafo);
+            });
+        }
+
+        function consultarLocalStorage() {
+            let listaLocalStorage = [];
+            let keys = Object.keys(localStorage)//array de keys de local storage
+            let numeroKeys = keys.length;//longitud del array
+
+            while (numeroKeys--) {//bucle para guaydar los valores del localstorage en el array
+                listaLocalStorage.push("Key: " + keys[numeroKeys] + ", Value: " + localStorage.getItem(keys[numeroKeys]));
+            }
+
+            let parrafo;
+            let txtParrafo;
+            h2 = document.createElement("h2");
+            txth2 = document.createTextNode("LocalStorage");
+            h2.appendChild(txth2);
+            document.body.appendChild(h2);
+            listaLocalStorage.forEach(element => {//recorremos el array y lo ponemos en un parrafo
+                console.log(element);
+                parrafo = document.createElement("p");
+                txtParrafo = document.createTextNode(element);
+                parrafo.appendChild(txtParrafo)
+                document.body.appendChild(parrafo);
+            });
+        }
+
+        function consultarSessionlStorage() {
+            let listaSessionStorage = [];
+            let keys = Object.keys(sessionStorage)//array de keys de session storage
+            let numeroKeys = keys.length;//longitud del array
+
+            while (numeroKeys--) {//bucle para guaydar los valores del sessionstorage en el array
+                listaSessionStorage.push("Key: " + keys[numeroKeys] + ", Value: " + sessionStorage.getItem(keys[numeroKeys]));
+            }
+
+            let parrafo;
+            let txtParrafo;
+            h2 = document.createElement("h2");
+            txth2 = document.createTextNode("SessionStorage");
+            h2.appendChild(txth2);
+            document.body.appendChild(h2);
+            listaSessionStorage.forEach(element => {//recorremos el array y lo ponemos en un parrafo
+                console.log(element);
+                parrafo = document.createElement("p");
+                txtParrafo = document.createTextNode(element);
+                parrafo.appendChild(txtParrafo)
+                document.body.appendChild(parrafo);
+            });
+        }
+
+
+
+    </script>
+</body>
+
+</html>
